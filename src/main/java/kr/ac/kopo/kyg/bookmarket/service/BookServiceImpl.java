@@ -18,4 +18,3 @@ public class BookServiceImpl implements BookService {
         return bookRepository.getAllBookList();
     }
 }
-//--
