@@ -1,8 +1,11 @@
 package kr.ac.kopo.kyg.bookmarket.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import kr.ac.kopo.kyg.bookmarket.domain.Book;
+import kr.ac.kopo.kyg.bookmarket.exception.BookIdException;
+import kr.ac.kopo.kyg.bookmarket.exception.CategoryException;
 import kr.ac.kopo.kyg.bookmarket.service.BookService;
 import kr.ac.kopo.kyg.bookmarket.validator.BookValidator;
 import kr.ac.kopo.kyg.bookmarket.validator.UnitsInStockValidator;
@@ -66,6 +69,9 @@ public class BookController {
     @GetMapping("/{category}")
     public String requestBooksByCategory(@PathVariable("category")String category, Model model) {
         List<Book> bookbyCategory = bookService.getBookListByCategory(category);
+        if(bookbyCategory == null || bookbyCategory.isEmpty()){
+            throw new CategoryException();
+        }
         model.addAttribute("bookList", bookbyCategory);
         return "books";
     }
@@ -126,4 +132,13 @@ public class BookController {
         binder.setAllowedFields("bookId","name","unitPrice","author","description","publisher","category","unitsInStock","releaseDate","condition","bookImage");
     }
 
+    @ExceptionHandler(value = {BookIdException.class})
+    public ModelAndView handleException(HttpServletRequest request, BookIdException e){
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("invalidBookId", e.getBookId());
+        mav.addObject("exception", e.toString());
+        mav.addObject("url", request.getRequestURL()+"/"+request.getQueryString());
+        mav.setViewName("errorBook");
+        return mav;
+    }
 }
