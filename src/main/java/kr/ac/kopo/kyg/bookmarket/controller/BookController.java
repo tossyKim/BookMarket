@@ -70,7 +70,7 @@ public class BookController {
     public String requestBooksByCategory(@PathVariable("category")String category, Model model) {
         List<Book> bookbyCategory = bookService.getBookListByCategory(category);
         if(bookbyCategory == null || bookbyCategory.isEmpty()){
-            throw new CategoryException();
+            throw new CategoryException(category);
         }
         model.addAttribute("bookList", bookbyCategory);
         return "books";
@@ -123,7 +123,6 @@ public class BookController {
         fis.close();
         os.close();
     }
-
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
