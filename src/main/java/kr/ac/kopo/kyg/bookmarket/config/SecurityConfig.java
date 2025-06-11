@@ -21,6 +21,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public UserDetailsService users(){
         UserDetails admin = User.builder()
@@ -30,6 +31,7 @@ public class SecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(admin);
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
@@ -38,19 +40,19 @@ public class SecurityConfig {
                                 .requestMatchers("/books/add").hasRole("ADMIN")
                                 .anyRequest().permitAll()
                 )
-//                .formLogin(Customizer.withDefaults());
+//            .formLogin(Customizer.withDefaults());
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/books/add")
                         .failureUrl("/loginfailed")
                         .usernameParameter("username")
-                        .usernameParameter("password")
+                        .passwordParameter("password")
                 )
                 .logout(
-                logout->logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login")
+                        logout -> logout
+                                .logoutUrl("/logout")
+                                .logoutSuccessUrl("/login")
                 );
 
         return http.build();
