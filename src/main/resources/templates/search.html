@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>식당 검색 및 리뷰</title>
+</head>
+<body>
+<h1>식당 검색</h1>
+
+<form method="get" th:action="@{/search}">
+    지역: <input type="text" name="place" th:value="${place}">
+    음식: <input type="text" name="food" th:value="${food}">
+    <button type="submit">검색</button>
+</form>
+
+<div th:if="${restaurants != null}">
+    <h2>검색 결과</h2>
+    <ul>
+        <li th:each="entry : ${restaurants}">
+            <!-- 리뷰 조회용 폼: /review로 보내고, restaurantName 파라미터로 -->
+            <form method="get" th:action="@{/review}" style="display:inline;">
+                <input type="hidden" name="restaurantName" th:value="${entry.key}">
+                <button type="submit" th:text="${entry.key}"></button>
+            </form>
+            (리뷰 수: <span th:text="${entry.value}"></span>)
+        </li>
+    </ul>
+</div>
+
+<div th:if="${restaurantName != null}">
+    <h2 th:text="${restaurantName} + ' 리뷰'">리뷰</h2>
+    <ul th:if="${reviews != null}">
+        <li th:each="entry : ${reviews}">
+            <span th:text="${entry.key}"></span>. <span th:text="${entry.value}"></span>
+        </li>
+    </ul>
+</div>
+
+<div th:if="${error != null}">
+    <p th:text="${error}" style="color:red;"></p>
+</div>
+
+</body>
+</html>

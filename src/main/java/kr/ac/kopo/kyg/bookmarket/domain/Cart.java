@@ -16,11 +16,34 @@ public class Cart {
 
     public Cart() {
         cartItems = new HashMap<String, CartItem>();
-        grandTotal = BigDecimal.ZERO;
+        grandTotal = new BigDecimal(0);
     }
 
     public Cart(String cartId) {
         this();
         this.cartId = cartId;
+    }
+
+    public void addCartItem(CartItem item) {
+        String bookId = item.getBook().getBookId();
+
+        if(cartItems.containsKey(bookId)) {
+            CartItem cartItem = cartItems.get(bookId);
+            cartItem.setQuantity(cartItem.getQuantity() + item.getQuantity());
+            cartItems.put(bookId, cartItem);
+        }
+    }
+
+    public void updateCartItem(CartItem item) {
+        grandTotal = new BigDecimal(0);
+        for(CartItem cartItem : cartItems.values()) {
+            grandTotal = grandTotal.add(cartItem.getTotalPrice());
+        }
+    }
+
+    public void removeCartItem(CartItem item) {
+        String bookId = item.getBook().getBookId();
+        cartItems.remove(bookId);
+        updateCartItem(item);
     }
 }
