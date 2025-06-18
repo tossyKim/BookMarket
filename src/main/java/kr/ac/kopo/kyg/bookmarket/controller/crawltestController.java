@@ -38,9 +38,11 @@ public class crawltestController {
     @GetMapping("/review")
     public String review(
             @RequestParam(name = "restaurantName", required = true) String restaurantName,
+            @RequestParam(name = "place", required = true) String place,
+            @RequestParam(name = "food", required = true) String food,
             Model model) {
 
-        String reviewApiUrl = String.format("http://localhost:5000/getreview?name=%s", restaurantName);
+        String reviewApiUrl = String.format("http://localhost:5000/getreview?place=%s&food=%s&name=%s", place, food, restaurantName);
         try {
             Map<String, String> reviewSummary = restTemplate.getForObject(reviewApiUrl, Map.class);
             model.addAttribute("reviews", reviewSummary);
@@ -48,6 +50,9 @@ public class crawltestController {
             model.addAttribute("error", "리뷰를 가져오는 중 오류가 발생했습니다.");
         }
         model.addAttribute("restaurantName", restaurantName);
+        model.addAttribute("place", place);
+        model.addAttribute("food", food);
+
         return "search";
     }
 }
