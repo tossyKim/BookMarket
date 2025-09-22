@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class crawltestController {
@@ -37,18 +38,34 @@ public class crawltestController {
     // 리뷰 조회
     @GetMapping("/review")
     public String review(
-            @RequestParam(name = "restaurantName", required = true) String restaurantName,
-            @RequestParam(name = "place", required = true) String place,
-            @RequestParam(name = "food", required = true) String food,
+            @RequestParam(name = "restaurantName") String restaurantName,
+            @RequestParam(name = "place") String place,
+            @RequestParam(name = "food") String food,
+            @RequestParam(name = "filter", required = false) String filter,
             Model model) {
 
-        String reviewApiUrl = String.format("http://localhost:5000/getreview?place=%s&food=%s&name=%s", place, food, restaurantName);
+        String reviewApiUrl = String.format(
+                "http://localhost:5000/getreview?place=%s&food=%s&restaurantName=%s",
+                place, food, restaurantName
+        );
+
+        Map<String, String> reviewSummary;
+
         try {
-            Map<String, String> reviewSummary = restTemplate.getForObject(reviewApiUrl, Map.class);
-            model.addAttribute("reviews", reviewSummary);
+            reviewSummary = restTemplate.getForObject(reviewApiUrl, Map.class);
         } catch (Exception e) {
             model.addAttribute("error", "리뷰를 가져오는 중 오류가 발생했습니다.");
+            return "search";
         }
+
+        // 필터 적용 (긍정/부정)
+        if (filter != null && (filter.equals("긍") || filter.equals("부"))) {
+            reviewSummary = reviewSummary.entrySet().stream()
+                    .filter(entry -> entry.getValue().equals(filter))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        }
+
+        model.addAttribute("reviews", reviewSummary);
         model.addAttribute("restaurantName", restaurantName);
         model.addAttribute("place", place);
         model.addAttribute("food", food);

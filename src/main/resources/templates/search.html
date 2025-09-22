@@ -2,6 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>식당 검색 및 리뷰</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 15px;
+        }
+        input[type=text] {
+            padding: 5px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .restaurant-list, .review-list {
+            background-color: white;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .restaurant-item, .review-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .review-filters {
+            margin-top: 10px;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <h1>식당 검색</h1>
@@ -14,11 +60,10 @@
 </form>
 
 <!-- 검색 결과 리스트 -->
-<div th:if="${restaurants != null}">
+<div th:if="${restaurants != null}" class="restaurant-list">
     <h2>검색 결과</h2>
     <ul>
-        <li th:each="entry : ${restaurants}">
-            <!-- 리뷰 요청용 폼 -->
+        <li th:each="entry : ${restaurants}" class="restaurant-item">
             <form method="get" th:action="@{/review}" style="display:inline;">
                 <input type="hidden" name="restaurantName" th:value="${entry.key}">
                 <input type="hidden" name="place" th:value="${place}">
@@ -31,18 +76,43 @@
 </div>
 
 <!-- 리뷰 목록 출력 -->
-<div th:if="${restaurantName != null}">
+<div th:if="${reviews != null}" class="review-list">
     <h2 th:text="${restaurantName} + ' 리뷰'">리뷰</h2>
-    <ul th:if="${reviews != null}">
-        <li th:each="entry : ${reviews}">
-            <span th:text="${entry.key}"></span>. <span th:text="${entry.value}"></span>
+
+    <!-- 필터 버튼 -->
+    <div class="review-filters">
+        <form th:action="@{/review}" method="get" style="display:inline;">
+            <input type="hidden" name="restaurantName" th:value="${restaurantName}">
+            <input type="hidden" name="place" th:value="${place}">
+            <input type="hidden" name="food" th:value="${food}">
+            <input type="hidden" name="filter" value="긍">
+            <button type="submit">긍정 리뷰</button>
+        </form>
+        <form th:action="@{/review}" method="get" style="display:inline;">
+            <input type="hidden" name="restaurantName" th:value="${restaurantName}">
+            <input type="hidden" name="place" th:value="${place}">
+            <input type="hidden" name="food" th:value="${food}">
+            <input type="hidden" name="filter" value="부">
+            <button type="submit">부정 리뷰</button>
+        </form>
+        <form th:action="@{/review}" method="get" style="display:inline;">
+            <input type="hidden" name="restaurantName" th:value="${restaurantName}">
+            <input type="hidden" name="place" th:value="${place}">
+            <input type="hidden" name="food" th:value="${food}">
+            <button type="submit">전체 리뷰</button>
+        </form>
+    </div>
+
+    <ul>
+        <li th:each="entry : ${reviews}" class="review-item">
+            <strong th:text="${entry.key}"></strong>: <span th:text="${entry.value}"></span>
         </li>
     </ul>
 </div>
 
 <!-- 에러 메시지 출력 -->
-<div th:if="${error != null}">
-    <p th:text="${error}" style="color:red;"></p>
+<div th:if="${error != null}" class="error-message">
+    <p th:text="${error}"></p>
 </div>
 
 </body>
