@@ -7,7 +7,7 @@ import kr.ac.kopo.kyg.bookmarket.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service//
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private BookRepository bookRepository;
