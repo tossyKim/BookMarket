@@ -37,8 +37,8 @@
             <div class="col-md-12">
                 <form name="deleteForm" method="post">
                     <input type="hidden" name="_method" value="delete">
-                    <a th:href="'javascript:deleteCart'" class="btn btn-danger text-right" style="float:left">삭제하기</a>
-                    <a href="#" class="btn btn-success text-right" style="float:right">주문하기</a>
+                    <a th:href="'javascript:deleteCart()'" class="btn btn-danger text-right" style="float:left">삭제하기</a>
+                    <a th:href="'/BookMarket/order/'+${cartId}" class="btn btn-success text-right" style="float:right">주문하기</a>
                 </form>
             </div>
             <div style="padding-top: 50px">
@@ -73,7 +73,7 @@
                     </span>
                 </div>
                 <br>
-                <a href="/BookMarket/books" class="btn btn-secondary" role="button">&laquo;도서목록</a>
+                <a href="/BookMarket/books" class="btn btn-secondary" role="button">&laquo;쇼핑 계속하기</a>
             </div>
         </div>
         <footer class="pt-3 mt-4 text-body-secondary border-top">
