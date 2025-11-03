@@ -10,9 +10,11 @@ import java.util.Map;
 @Data
 @ToString
 public class Cart {
+
     private String cartId;
-    private Map<String, CartItem> cartItems;
+    private Map<String,CartItem> cartItems;
     private BigDecimal grandTotal;
+
 
     public Cart() {
         cartItems = new HashMap<String, CartItem>();
@@ -23,27 +25,51 @@ public class Cart {
         this();
         this.cartId = cartId;
     }
+/*
+	public String getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(String cartId) {
+		this.cartId = cartId;
+	}
+
+	public Map<String, CartItem> getCartItems() {
+		return cartItems;
+	}
+
+	public void setCartItems(Map<String, CartItem> cartItems) {
+		this.cartItems = cartItems;
+	}
+
+	public BigDecimal getGrandTotal() {
+		return grandTotal;
+	}
+	*/
 
     public void addCartItem(CartItem item) {
         String bookId = item.getBook().getBookId();
 
         if(cartItems.containsKey(bookId)) {
             CartItem cartItem = cartItems.get(bookId);
-            cartItem.setQuantity(cartItem.getQuantity() + item.getQuantity());
+            cartItem.setQuantity(cartItem.getQuantity()+item.getQuantity());
             cartItems.put(bookId, cartItem);
+        } else {
+            cartItems.put(bookId, item);
         }
-    }
-
-    public void updateCartItem(CartItem item) {
-        grandTotal = new BigDecimal(0);
-        for(CartItem cartItem : cartItems.values()) {
-            grandTotal = grandTotal.add(cartItem.getTotalPrice());
-        }
+        updateGrandTotal();
     }
 
     public void removeCartItem(CartItem item) {
         String bookId = item.getBook().getBookId();
         cartItems.remove(bookId);
-        updateCartItem(item);
+        updateGrandTotal();
+    }
+
+    public void updateGrandTotal() {
+        grandTotal= new BigDecimal(0);
+        for(CartItem item : cartItems.values()){
+            grandTotal = grandTotal.add(item.getTotalPrice());
+        }
     }
 }

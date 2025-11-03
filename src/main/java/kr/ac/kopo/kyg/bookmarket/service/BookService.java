@@ -5,9 +5,12 @@ import java.util.Map;
 import java.util.Set;
 
 public interface BookService {
+
     List<Book> getAllBookList();
-    Book getBookByID(String bookID);
     List<Book> getBookListByCategory(String category);
     Set<Book> getBookListByFilter(Map<String, List<String>> filter);
-    Void setNewBook(Book book);
+    Book getBookById(String bookId);
+    void setNewBook(Book book);
+
+
 }

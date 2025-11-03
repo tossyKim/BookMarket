@@ -10,10 +10,10 @@ import lombok.Data;
 @Entity
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
-    private String country;
-    private String zipcode;
-    private String address;
-    private String detailName;
+    private String country; //국가명
+    private String zipcode; //우편번호
+    private String addressName; //기본주소
+    private String detailName; //상세주소
 }

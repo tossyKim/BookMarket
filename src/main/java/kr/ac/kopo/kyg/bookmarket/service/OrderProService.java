@@ -16,22 +16,25 @@ public class OrderProService {
     @Autowired
     private OrderProRepository orderProRepository;
 
-    public void save(Order order){
+    public void save(Order order) {
         orderProRepository.save(order);
     }
 
-    public Page<Order> listAll(int pageNum, String sortField, String sortDir){
+    public Page<Order> listAll(int pageNum, String sortField, String sortDir) {
         int pageSize = 5;
-        Pageable pageable = PageRequest.of(pageNum-1, pageSize, sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
+        Sort sort = sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNum-1, pageSize, sort);
         return orderProRepository.findAll(pageable);
     }
 
-    public Order get(Long id){
+    public Order get(Long id) {
         return orderProRepository.findById(id).get();
     }
-    public void delete(Long id){
+
+    public void delete(Long id) {
         orderProRepository.deleteById(id);
     }
+
     public void deleteAll(){
         orderProRepository.deleteAll();
     }
