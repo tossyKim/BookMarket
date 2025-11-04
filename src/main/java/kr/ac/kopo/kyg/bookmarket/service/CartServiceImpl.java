@@ -17,10 +17,12 @@ public class CartServiceImpl implements CartService{
     }
 
     public Cart read(String cartId) {
+        System.out.println("Cart read 테스트");
         return cartRepository.read(cartId);
     }
 
     public void update(String cartId, Cart cart) {
+        System.out.println("Cart update 테스트");
         cartRepository.update(cartId, cart);
     }
 

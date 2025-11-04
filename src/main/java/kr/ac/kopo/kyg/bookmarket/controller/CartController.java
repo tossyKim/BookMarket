@@ -56,16 +56,19 @@ public class CartController {
     public void addCartByNewItem(@PathVariable("bookId") String bookId, HttpServletRequest request) {
         String sessionId = request.getSession(true).getId();
         Cart cart = cartService.read(sessionId);
+        System.out.println("read수행");
         if(cart == null)
 
             cart = cartService.create(new Cart(sessionId));
-
+        System.out.println("create수행");
         Book book = bookService.getBookById(bookId);
+        System.out.println("getBookById 수행");
 
         if(book == null)
             throw new IllegalArgumentException(new BookIdException(bookId));
 
         cart.addCartItem(new CartItem(book));
+        System.out.println("테스트");
         cartService.update(sessionId, cart);
     }
 
@@ -85,7 +88,6 @@ public class CartController {
         cart.removeCartItem(new CartItem(book));
 
         cartService.update(sessionId, cart);
-
     }
 
     @DeleteMapping("/{cartId}")
