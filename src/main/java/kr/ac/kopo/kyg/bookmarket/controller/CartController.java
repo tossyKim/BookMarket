@@ -51,19 +51,13 @@ public class CartController {
         return "cart";
     }
 
-
-
-
     @PutMapping("/book/{bookId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void addCartByNewItem(@PathVariable("bookId") String bookId, HttpServletRequest request) {
-
         String sessionId = request.getSession(true).getId();
-
-
         Cart cart = cartService.read(sessionId);
-
         if(cart == null)
+
             cart = cartService.create(new Cart(sessionId));
 
         Book book = bookService.getBookById(bookId);
@@ -72,9 +66,7 @@ public class CartController {
             throw new IllegalArgumentException(new BookIdException(bookId));
 
         cart.addCartItem(new CartItem(book));
-
         cartService.update(sessionId, cart);
-
     }
 
     @DeleteMapping("/book/{bookId}")
