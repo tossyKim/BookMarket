@@ -54,7 +54,9 @@ public class CartController {
     @PutMapping("/book/{bookId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void addCartByNewItem(@PathVariable("bookId") String bookId, HttpServletRequest request) {
+        System.out.println("1");
         String sessionId = request.getSession(true).getId();
+        System.out.println("2");
         Cart cart = cartService.read(sessionId);
         System.out.println("read수행");
         if(cart == null)
