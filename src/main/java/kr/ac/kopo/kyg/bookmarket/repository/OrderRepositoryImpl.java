@@ -1,6 +1,7 @@
 package kr.ac.kopo.kyg.bookmarket.repository;
 
 import kr.ac.kopo.kyg.bookmarket.domain.Order;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

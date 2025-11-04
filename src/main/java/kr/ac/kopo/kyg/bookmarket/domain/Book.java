@@ -1,19 +1,21 @@
 package kr.ac.kopo.kyg.bookmarket.domain;
 
-import jakarta.validation.constraints.*;
-import kr.ac.kopo.kyg.bookmarket.validator.BookId;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.math.BigDecimal;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.ac.kopo.kyg.bookmarket.validator.BookId;
+
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
 @Data
-//@Getter
-//@Setter
-//@NoArgsConstructor
 public class Book {
     @BookId
     @Pattern(regexp="ISBN[1-9]+", message="{Pattern.book.bookId}")

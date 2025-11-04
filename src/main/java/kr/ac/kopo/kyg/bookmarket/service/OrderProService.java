@@ -2,7 +2,6 @@ package kr.ac.kopo.kyg.bookmarket.service;
 
 import kr.ac.kopo.kyg.bookmarket.domain.Order;
 import kr.ac.kopo.kyg.bookmarket.repository.OrderProRepository;
-import kr.ac.kopo.kyg.bookmarket.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

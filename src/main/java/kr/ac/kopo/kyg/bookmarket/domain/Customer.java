@@ -1,6 +1,5 @@
 package kr.ac.kopo.kyg.bookmarket.domain;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 

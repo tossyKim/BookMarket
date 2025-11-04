@@ -1,12 +1,19 @@
 package kr.ac.kopo.kyg.bookmarket.exception;
 
+import lombok.Data;
+
+@Data
+@SuppressWarnings("serial")
 public class BookIdException extends RuntimeException {
+
     private String bookId;
-    public BookIdException(String bookId) {
-        super();
+
+    public BookIdException(String bookId) { //생성자
         this.bookId = bookId;
     }
-    public String getBookId() {
-        return bookId;
-    }
+
+	/*public String getBookId() {  //Getter() 메소드
+		return bookId;
+	}
+	*/
 }

@@ -3,7 +3,6 @@ package kr.ac.kopo.kyg.bookmarket.service;
 import kr.ac.kopo.kyg.bookmarket.domain.Cart;
 import kr.ac.kopo.kyg.bookmarket.exception.CartException;
 import kr.ac.kopo.kyg.bookmarket.repository.CartRepository;
-import kr.ac.kopo.kyg.bookmarket.repository.CartRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
