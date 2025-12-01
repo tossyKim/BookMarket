@@ -15,37 +15,37 @@ import java.util.Locale;
 @Configuration
 @ComponentScan("server")
 public class MessageConfig implements WebMvcConfigurer {
-	
-	/*
-	@Bean
-	public MessageSource messageSource() {
-	   // ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		
-	    messageSource.setBasename("classpath:/messages");
-	    messageSource.setDefaultEncoding("UTF-8");
-	    messageSource.setCacheSeconds(60);
-	    messageSource.setUseCodeAsDefaultMessage(true);
-	   return messageSource;
-	}
-	
-	 */
-	@Bean
+
+    /*
+    @Bean
+    public MessageSource messageSource() {
+       // ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+
+        messageSource.setBasename("classpath:/messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setCacheSeconds(60);
+        messageSource.setUseCodeAsDefaultMessage(true);
+       return messageSource;
+    }
+
+     */
+    @Bean
     public LocaleResolver localeResolver() {
 
-		SessionLocaleResolver resolver = new SessionLocaleResolver();
-       // resolver.setDefaultLocale(Locale.getDefault());
-        resolver.setDefaultLocale(Locale.KOREA);       
+        SessionLocaleResolver resolver = new SessionLocaleResolver();
+        // resolver.setDefaultLocale(Locale.getDefault());
+        resolver.setDefaultLocale(Locale.KOREA);
         return resolver;
     }
-	
+
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
         interceptor.setParamName("lang");
         return interceptor;
     }
-   
+
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

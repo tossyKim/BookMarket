@@ -130,9 +130,9 @@ public class OrderController {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null) {
-            session.invalidate();
-        }
+//        if (session != null) {
+//            session.invalidate();
+//        }
 
         return "orderFinished";
     }
@@ -141,9 +141,9 @@ public class OrderController {
     @GetMapping("/orderCancelled")
     public String requestCancelled(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+//        if (session != null) {
+//            session.invalidate();
+//        }
 
         return "orderCancelled";
     }
@@ -218,4 +218,3 @@ public class OrderController {
         return "redirect:/order/list";
     }
 }
-
